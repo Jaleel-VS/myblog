@@ -6,14 +6,13 @@
 </script>
 
 <svelte:head>
-	<title>Archive</title>
+	<title>Writing</title>
 	<meta name="description" content="All blog posts" />
 </svelte:head>
 
 <div class="archive">
 	<header class="page-header">
-		<h1>Archive</h1>
-		<p class="count">{data.posts.length} posts</p>
+		<h1>Writing</h1>
 	</header>
 
 	<div class="content-grid">

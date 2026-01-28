@@ -16,7 +16,7 @@
 
 <article class="article">
 	<header>
-		<a href="/blog" class="back-link">&larr; Archive</a>
+		<a href="/blog" class="back-link">&larr; Back</a>
 		<h1>{data.post.title}</h1>
 		<div class="meta">
 			<time>{formatDate(data.post.publishedAt ?? data.post.createdAt)}</time>
@@ -36,7 +36,7 @@
 	</div>
 
 	<footer>
-		<a href="/blog" class="back-link">&larr; Back to archive</a>
+		<a href="/blog" class="back-link">&larr; All posts</a>
 	</footer>
 </article>
 

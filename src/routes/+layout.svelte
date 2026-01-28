@@ -21,8 +21,7 @@
 		<nav>
 			<a href="/" class="logo">blog.</a>
 			<div class="nav-links">
-				<a href="/">Index</a>
-				<a href="/blog">Archive</a>
+				<a href="/blog">Writing</a>
 			</div>
 		</nav>
 	</header>

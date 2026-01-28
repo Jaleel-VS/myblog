@@ -12,7 +12,7 @@
 
 <div class="archive">
 	<header class="page-header">
-		<a href="/blog" class="back-link">&larr; All posts</a>
+		<a href="/blog" class="back-link">&larr; Back</a>
 		<h1>{data.tag.name}</h1>
 		<p class="count">{data.posts.length} {data.posts.length === 1 ? 'post' : 'posts'}</p>
 	</header>
