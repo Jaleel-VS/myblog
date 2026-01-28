@@ -19,7 +19,7 @@
 <div class="layout">
 	<header>
 		<nav>
-			<a href="/" class="logo">blog.</a>
+			<a href="/" class="logo">jaleel's thoughts</a>
 			<div class="nav-links">
 				<a href="/blog">Writing</a>
 			</div>

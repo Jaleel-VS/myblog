@@ -6,12 +6,12 @@
 </script>
 
 <svelte:head>
-	<title>Blog</title>
-	<meta name="description" content="Thoughts, stories, and ideas." />
+	<title>jaleel's thoughts</title>
+	<meta name="description" content="thoughts, stories, and ideas." />
 </svelte:head>
 
 <div class="hero">
-	<h1>Thoughts, stories,<br />and ideas.</h1>
+	<h1>thoughts, stories,<br />and ideas.</h1>
 </div>
 
 <section class="posts">
