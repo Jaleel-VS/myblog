@@ -19,144 +19,100 @@
 </script>
 
 <svelte:head>
-	<title>Manage Tags</title>
+	<title>Admin — Tags</title>
 </svelte:head>
 
-<div class="px-4 sm:px-0">
-	<h1 class="text-3xl font-bold text-gray-900 mb-8">Tags</h1>
+<div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:32px;">
+	<span class="sw-mono sw-mute" style="font-size:11px;letter-spacing:.1em;text-transform:uppercase">
+		§ <span class="sw-red">Tags</span> — {data.tags.length} total
+	</span>
+</div>
 
-	{#if form?.error}
-		<div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-md">
-			<p class="text-red-700">{form.error}</p>
-		</div>
-	{/if}
+{#if form?.error}
+	<div class="adm-alert adm-alert-err">{form.error}</div>
+{/if}
+{#if form?.success}
+	<div class="adm-alert adm-alert-ok">Tag saved.</div>
+{/if}
 
-	{#if form?.success}
-		<div class="mb-6 p-4 bg-green-50 border border-green-200 rounded-md">
-			<p class="text-green-700">Tag saved successfully!</p>
-		</div>
-	{/if}
-
-	<div class="bg-white shadow rounded-lg p-6 mb-8">
-		<h2 class="text-lg font-medium text-gray-900 mb-4">Add New Tag</h2>
-		<form method="POST" action="?/create" use:enhance class="flex gap-4">
+<!-- Add tag -->
+<form method="POST" action="?/create" use:enhance style="margin-bottom:40px;">
+	<div class="adm-field" style="margin-bottom:0">
+		<label for="new-tag" class="adm-label">New tag</label>
+		<div style="display:flex;gap:0;">
 			<input
 				type="text"
 				name="name"
+				id="new-tag"
 				placeholder="Tag name"
 				required
-				class="flex-1 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+				class="adm-input"
+				style="flex:1"
 			/>
-			<button
-				type="submit"
-				class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
-			>
-				Add Tag
-			</button>
-		</form>
-	</div>
-
-	{#if data.tags.length === 0}
-		<div class="text-center py-12 bg-white rounded-lg shadow">
-			<p class="text-gray-500 text-lg">No tags yet.</p>
-			<p class="text-gray-400 mt-2">Create your first tag using the form above.</p>
+			<button type="submit" class="adm-btn adm-btn-ink" style="white-space:nowrap">Add tag</button>
 		</div>
-	{:else}
-		<div class="bg-white shadow overflow-hidden sm:rounded-lg">
-			<table class="min-w-full divide-y divide-gray-200">
-				<thead class="bg-gray-50">
+	</div>
+</form>
+
+{#if data.tags.length === 0}
+	<p class="sw-empty">No tags yet.</p>
+{:else}
+	<div class="adm-table-wrap">
+		<table class="adm-table">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Slug</th>
+					<th>Posts</th>
+					<th style="text-align:right">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{#each data.tags as tag (tag.id)}
 					<tr>
-						<th
-							scope="col"
-							class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-						>
-							Name
-						</th>
-						<th
-							scope="col"
-							class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-						>
-							Slug
-						</th>
-						<th
-							scope="col"
-							class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-						>
-							Posts
-						</th>
-						<th scope="col" class="relative px-6 py-3">
-							<span class="sr-only">Actions</span>
-						</th>
-					</tr>
-				</thead>
-				<tbody class="bg-white divide-y divide-gray-200">
-					{#each data.tags as tag (tag.id)}
-						<tr>
-							<td class="px-6 py-4">
-								{#if editingId === tag.id}
-									<form method="POST" action="?/update" use:enhance class="flex gap-2">
-										<input type="hidden" name="id" value={tag.id} />
-										<input
-											type="text"
-											name="name"
-											bind:value={editingName}
-											required
-											class="flex-1 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm"
-										/>
-										<button
-											type="submit"
-											class="text-green-600 hover:text-green-900 text-sm font-medium"
-										>
-											Save
-										</button>
-										<button
-											type="button"
-											onclick={cancelEdit}
-											class="text-gray-600 hover:text-gray-900 text-sm font-medium"
-										>
-											Cancel
-										</button>
-									</form>
-								{:else}
-									<span class="text-sm font-medium text-gray-900">{tag.name}</span>
-								{/if}
-							</td>
-							<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-								{tag.slug}
-							</td>
-							<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-								{tag.postCount}
-							</td>
-							<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
-								{#if editingId !== tag.id}
-									<button
-										type="button"
-										onclick={() => startEdit(tag)}
-										class="text-blue-600 hover:text-blue-900"
-									>
-										Edit
-									</button>
+						<td>
+							{#if editingId === tag.id}
+								<form method="POST" action="?/update" use:enhance style="display:flex;gap:8px;align-items:center;">
+									<input type="hidden" name="id" value={tag.id} />
+									<input
+										type="text"
+										name="name"
+										bind:value={editingName}
+										required
+										class="adm-inline-input"
+									/>
+									<button type="submit" class="adm-action primary">Save</button>
+									<button type="button" onclick={cancelEdit} class="adm-action">Cancel</button>
+								</form>
+							{:else}
+								<span class="td-title">{tag.name}</span>
+							{/if}
+						</td>
+						<td><span class="sw-mono sw-mute" style="font-size:11px">{tag.slug}</span></td>
+						<td><span class="sw-mono sw-mute" style="font-size:11px">{tag.postCount}</span></td>
+						<td>
+							{#if editingId !== tag.id}
+								<div style="display:flex;gap:16px;justify-content:flex-end;">
+									<button type="button" onclick={() => startEdit(tag)} class="adm-action primary">Edit</button>
 									<form
 										method="POST"
 										action="?/delete"
 										use:enhance={() => {
 											return async ({ update }) => {
-												if (confirm('Are you sure you want to delete this tag?')) {
-													await update();
-												}
+												if (confirm('Delete this tag?')) await update();
 											};
 										}}
-										class="inline"
+										style="display:contents"
 									>
 										<input type="hidden" name="id" value={tag.id} />
-										<button type="submit" class="text-red-600 hover:text-red-900">Delete</button>
+										<button type="submit" class="adm-action danger">Delete</button>
 									</form>
-								{/if}
-							</td>
-						</tr>
-					{/each}
-				</tbody>
-			</table>
-		</div>
-	{/if}
-</div>
+								</div>
+							{/if}
+						</td>
+					</tr>
+				{/each}
+			</tbody>
+		</table>
+	</div>
+{/if}
