@@ -44,11 +44,11 @@
 <div class="sw-wrap">
 	<header class="sw-topbar">
 		<div class="sw-topbar-l">
-			<a href="https://jaleel.co.za" class="sw-mono" style="font-size:11px;letter-spacing:.06em;text-transform:uppercase">
+			<a href="https://jaleel.me" class="sw-mono" style="font-size:11px;letter-spacing:.06em;text-transform:uppercase">
 				Jaleel <span class="sw-red">/</span> Writing
 			</a>
 		</div>
-		<div class="sw-topbar-c">— jaleel.co.za —</div>
+		<div class="sw-topbar-c">— blog.jaleel.me —</div>
 		<nav class="sw-topbar-r">
 			<a href="/">Home</a>
 			<a href="/blog">All posts</a>
