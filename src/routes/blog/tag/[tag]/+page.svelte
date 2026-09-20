@@ -10,54 +10,39 @@
 	<meta name="description" content="Posts tagged {data.tag.name}" />
 </svelte:head>
 
-<section class="sw-section-head">
-	<div class="label">
-		§ <span class="sw-red">Tag</span>
-	</div>
-	<h1>
-		<span style="color:var(--mute)">/</span> {data.tag.name}<span class="sw-red">.</span>
-	</h1>
-</section>
+<main class="public-content">
+	<section class="page-intro compact">
+		<a href="/blog" class="back-link">← All posts</a>
+		<h1>{data.tag.name}</h1>
+		<p>Posts filed under this topic.</p>
+	</section>
 
-<div class="sw-page" style="padding-top:32px">
-	<div class="sw-content-grid">
-		<main>
-			{#if data.posts.length === 0}
-				<p class="sw-empty">No posts with this tag yet.</p>
-			{:else}
-				<div class="sw-post-list">
-					{#each data.posts as post, i (post.id)}
-						<a href="/blog/{post.slug}" class="sw-post-row">
-							<span class="n">{String(i + 1).padStart(2, '0')}</span>
-							<div>
-								<div class="title">{post.title}</div>
-								{#if post.excerpt}
-									<div class="excerpt">{post.excerpt}</div>
-								{/if}
-							</div>
-							<div class="date">{formatDateShort(post.publishedAt ?? post.createdAt)}</div>
-							<span class="arr">→</span>
-						</a>
-					{/each}
-				</div>
-			{/if}
-		</main>
+	<hr />
 
+	<section class="content-section">
 		{#if data.tags.length > 0}
-			<aside class="sw-sidebar">
-				<div class="lbl">Topics</div>
-				<div class="sw-tag-list">
-					{#each data.tags as tag (tag.id)}
-						<a
-							href="/blog/tag/{tag.slug}"
-							class="sw-tag-link"
-							class:active={tag.slug === data.tag.slug}
-						>
-							{tag.name}
-						</a>
-					{/each}
-				</div>
-			</aside>
+			<nav class="topic-list" aria-label="Topics">
+				<span>Topics</span>
+				{#each data.tags as tag (tag.id)}
+					<a href="/blog/tag/{tag.slug}" class:active={tag.slug === data.tag.slug}>{tag.name}</a>
+				{/each}
+			</nav>
 		{/if}
-	</div>
-</div>
+
+		{#if data.posts.length === 0}
+			<p class="empty-state">No posts with this tag yet.</p>
+		{:else}
+			<div class="post-list">
+				{#each data.posts as post (post.id)}
+					<a href="/blog/{post.slug}" class="post-row">
+						<span class="post-copy">
+							<strong>{post.title}</strong>
+							{#if post.excerpt}<small>{post.excerpt}</small>{/if}
+						</span>
+						<time>{formatDateShort(post.publishedAt ?? post.createdAt)}</time>
+					</a>
+				{/each}
+			</div>
+		{/if}
+	</section>
+</main>
